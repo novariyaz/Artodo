@@ -1,0 +1,235 @@
+/* ===== THEME DEFINITIONS ===== */
+/* Each theme uses authentic colors, fonts, and styling from the art movement */
+
+/* ===== 1. STARRY NIGHT — Van Gogh ===== */
+/* Actual palette from "The Starry Night" (1889, MoMA):
+   Cobalt blue, ultramarine, Prussian blue sky;
+   Cadmium yellow, Naples yellow stars/moon;
+   Viridian/sap green cypress; raw sienna village */
+[data-theme="starry-night"] {
+    --bg-primary: #0f1a3c;
+    --bg-secondary: #162350;
+    --bg-card: rgba(15, 26, 60, 0.78);
+    --bg-hover: rgba(22, 35, 80, 0.55);
+    --text-primary: #f0ead6;
+    --text-secondary: #8899bb;
+    --accent-primary: #fdd835;
+    --accent-secondary: #4a90d9;
+    --accent-text: #0f1a3c;
+    --accent-glow: rgba(253, 216, 53, 0.3);
+    --border: rgba(74, 144, 217, 0.22);
+    --shadow: rgba(0, 0, 0, 0.4);
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Playfair Display', serif;
+}
+
+/* ===== 2. UKIYO-E — Hokusai / Japanese Woodblock ===== */
+/* Inspired by "The Great Wave off Kanagawa" — indigo, vermillion, washi cream */
+[data-theme="ukiyo-e"] {
+    --bg-primary: #f7f3e9;
+    --bg-secondary: #ede8d4;
+    --bg-card: rgba(247, 243, 233, 0.85);
+    --bg-hover: rgba(237, 232, 212, 0.7);
+    --text-primary: #2d3436;
+    --text-secondary: #636e72;
+    --accent-primary: #c1121f;
+    --accent-secondary: #2d4059;
+    --accent-text: #fefae0;
+    --accent-glow: rgba(193, 18, 31, 0.2);
+    --border: rgba(45, 64, 89, 0.15);
+    --shadow: rgba(45, 52, 54, 0.12);
+    --font-heading: 'Noto Serif', serif;
+    --font-body: 'Noto Serif', serif;
+}
+
+/* ===== 3. ART DECO — 1920s Gatsby Era ===== */
+/* Geometric luxury — gold, black, emerald. Inspired by Chrysler Building, Tamara de Lempicka */
+[data-theme="art-deco"] {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-card: rgba(20, 20, 20, 0.85);
+    --bg-hover: rgba(30, 30, 30, 0.8);
+    --text-primary: #faf3e0;
+    --text-secondary: #a89f8e;
+    --accent-primary: #d4af37;
+    --accent-secondary: #2d6a4f;
+    --accent-text: #0a0a0a;
+    --accent-glow: rgba(212, 175, 55, 0.25);
+    --border: rgba(212, 175, 55, 0.2);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --font-heading: 'Poiret One', cursive;
+    --font-body: 'Josefin Sans', sans-serif;
+}
+
+/* ===== 4. BAUHAUS — Kandinsky, Mondrian ===== */
+/* Primary colors, geometric precision, clean modernism (1919–1933) */
+[data-theme="bauhaus"] {
+    --bg-primary: #f1faee;
+    --bg-secondary: #e8f0e4;
+    --bg-card: rgba(241, 250, 238, 0.9);
+    --bg-hover: rgba(232, 240, 228, 0.7);
+    --text-primary: #1d3557;
+    --text-secondary: #457b9d;
+    --accent-primary: #e63946;
+    --accent-secondary: #457b9d;
+    --accent-text: #f1faee;
+    --accent-glow: rgba(230, 57, 70, 0.2);
+    --border: rgba(29, 53, 87, 0.12);
+    --shadow: rgba(29, 53, 87, 0.1);
+    --font-heading: 'DM Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+}
+
+/* ===== 5. IMPRESSIONIST — Monet ===== */
+/* Soft watercolors inspired by "Water Lilies" — lavender, rose, sage */
+[data-theme="impressionist"] {
+    --bg-primary: #f0e6ff;
+    --bg-secondary: #e8ddf5;
+    --bg-card: rgba(240, 230, 255, 0.8);
+    --bg-hover: rgba(232, 221, 245, 0.6);
+    --text-primary: #3d3453;
+    --text-secondary: #7b6f8e;
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #f472b6;
+    --accent-text: #faf5ff;
+    --accent-glow: rgba(139, 92, 246, 0.2);
+    --border: rgba(139, 92, 246, 0.15);
+    --shadow: rgba(61, 52, 83, 0.1);
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-body: 'Cormorant Garamond', serif;
+}
+
+/* ===== 6. CYBERPUNK — Neon Noir ===== */
+/* Blade Runner meets Akira — neon cyan, hot pink, deep dark */
+[data-theme="cyberpunk"] {
+    --bg-primary: #0a0e17;
+    --bg-secondary: #0d1117;
+    --bg-card: rgba(13, 17, 23, 0.85);
+    --bg-hover: rgba(22, 27, 34, 0.8);
+    --text-primary: #e6edf3;
+    --text-secondary: #7d8590;
+    --accent-primary: #00f0ff;
+    --accent-secondary: #ff006e;
+    --accent-text: #0a0e17;
+    --accent-glow: rgba(0, 240, 255, 0.25);
+    --border: rgba(0, 240, 255, 0.15);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+}
+
+/* ===== THEME-SPECIFIC OVERRIDES ===== */
+
+/* Art Deco gold line accents */
+[data-theme="art-deco"] .app-header {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+[data-theme="art-deco"] .task-card {
+    border-left: 3px solid rgba(212, 175, 55, 0.4);
+}
+
+[data-theme="art-deco"] .app-logo {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+/* Bauhaus bold geometric styling */
+[data-theme="bauhaus"] .filter-tab.active {
+    border-radius: 4px;
+}
+
+[data-theme="bauhaus"] .task-card {
+    border-radius: 4px;
+    border-left: 4px solid var(--accent-primary);
+}
+
+[data-theme="bauhaus"] .modal {
+    border-radius: 4px;
+}
+
+[data-theme="bauhaus"] .app-logo {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Ukiyo-e clean elegant borders */
+[data-theme="ukiyo-e"] .task-card {
+    border-left: 3px solid rgba(193, 18, 31, 0.3);
+}
+
+[data-theme="ukiyo-e"] .app-logo {
+    letter-spacing: 3px;
+}
+
+/* Impressionist soft rounding */
+[data-theme="impressionist"] .task-card {
+    border-radius: 20px;
+    border: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+[data-theme="impressionist"] .filter-tabs {
+    border-radius: 20px;
+}
+
+[data-theme="impressionist"] .app-logo {
+    font-size: 2rem;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Cyberpunk glitch & neon effects */
+[data-theme="cyberpunk"] .app-logo {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 1.6rem;
+    text-shadow: 0 0 10px #00f0ff, 0 0 30px #00f0ff44;
+}
+
+[data-theme="cyberpunk"] .task-card {
+    border-left: 2px solid rgba(0, 240, 255, 0.3);
+    border-radius: 4px;
+}
+
+[data-theme="cyberpunk"] .task-card:hover {
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), 0 8px 24px var(--shadow);
+}
+
+[data-theme="cyberpunk"] .filter-tab.active {
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+[data-theme="cyberpunk"] .quick-add-btn {
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+}
+
+[data-theme="cyberpunk"] .header-btn:hover {
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+/* Starry Night — Van Gogh's expressive Post-Impressionist style */
+[data-theme="starry-night"] .task-card:hover {
+    box-shadow: 0 0 24px rgba(253, 216, 53, 0.12), 0 0 48px rgba(74, 144, 217, 0.08), 0 8px 24px var(--shadow);
+}
+
+[data-theme="starry-night"] .task-card {
+    border-left: 3px solid rgba(74, 144, 217, 0.35);
+}
+
+[data-theme="starry-night"] .app-logo {
+    font-style: italic;
+    text-shadow: 0 0 16px rgba(253, 216, 53, 0.5), 0 0 40px rgba(253, 216, 53, 0.2);
+}
+
+[data-theme="starry-night"] .filter-tab.active {
+    box-shadow: 0 2px 12px rgba(253, 216, 53, 0.3);
+}
+
+[data-theme="starry-night"] .quick-add-btn {
+    box-shadow: 0 0 16px rgba(253, 216, 53, 0.35);
+}
+
+[data-theme="starry-night"] .header-btn:hover {
+    box-shadow: 0 0 14px rgba(253, 216, 53, 0.25);
+}

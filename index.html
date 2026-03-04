@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="starry-night">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArTodo — Artistic Task Manager</title>
+    <meta name="description" content="A beautiful, art-inspired to-do list application with 6 stunning themes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Poiret+One&family=Josefin+Sans:wght@300;400;600&family=DM+Sans:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-logo">ArTodo</h1>
+            </div>
+            <div class="header-center">
+                <div class="search-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search tasks...">
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="progress-ring-wrapper" title="Daily progress">
+                    <svg class="progress-ring" viewBox="0 0 44 44">
+                        <circle class="progress-ring-bg" cx="22" cy="22" r="18" fill="none" stroke-width="3"/>
+                        <circle class="progress-ring-fill" id="progress-ring-fill" cx="22" cy="22" r="18" fill="none" stroke-width="3" stroke-dasharray="113.1" stroke-dashoffset="113.1"/>
+                    </svg>
+                    <span class="progress-text" id="progress-text">0%</span>
+                </div>
+                <button class="header-btn" id="theme-btn" title="Change Theme">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                </button>
+                <button class="header-btn" id="pomodoro-btn" title="Pomodoro Timer">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </button>
+                <button class="header-btn" id="stats-btn" title="Statistics">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Streak Banner -->
+        <div class="streak-banner" id="streak-banner" style="display:none">
+            <span class="streak-fire">🔥</span>
+            <span class="streak-text" id="streak-text"></span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <nav class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="today">Today</button>
+                <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+                <button class="filter-tab" data-filter="completed">Completed</button>
+            </nav>
+
+            <div class="category-chips" id="category-chips">
+                <button class="category-chip active" data-category="all">All</button>
+            </div>
+
+            <div class="task-list" id="task-list"></div>
+
+            <div class="empty-state" id="empty-state">
+                <div class="empty-icon">🎨</div>
+                <p class="empty-quote" id="empty-quote">"Every artist was first an amateur." — Ralph Waldo Emerson</p>
+                <p class="empty-hint">Add your first task to begin your masterpiece</p>
+            </div>
+        </main>
+
+        <!-- Quick Add Bar -->
+        <div class="quick-add-bar">
+            <div class="quick-add-inner">
+                <input type="text" id="quick-add-input" class="quick-add-input" placeholder="✏️ What's your next masterpiece?">
+                <div class="quick-add-options">
+                    <select id="quick-priority" class="quick-select" title="Priority">
+                        <option value="medium">🟡 Med</option>
+                        <option value="high">🔴 High</option>
+                        <option value="low">🟢 Low</option>
+                    </select>
+                    <select id="quick-category" class="quick-select" title="Category"></select>
+                    <input type="date" id="quick-due" class="quick-date" title="Due date">
+                </div>
+                <button id="quick-add-btn" class="quick-add-btn" title="Add task">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal glass-card">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">New Task</h2>
+                <button class="modal-close" data-close="task-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="modal-task-title" class="form-input" placeholder="Task title">
+                </div>
+                <div class="form-group">
+                    <textarea id="modal-task-desc" class="form-textarea" placeholder="Add a description..." rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <div class="priority-buttons" id="priority-buttons">
+                            <button class="priority-btn" data-priority="low">🟢 Low</button>
+                            <button class="priority-btn active" data-priority="medium">🟡 Med</button>
+                            <button class="priority-btn" data-priority="high">🔴 High</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" id="modal-due-date" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <div class="category-select-wrapper">
+                        <select id="modal-category" class="form-select"></select>
+                        <div class="add-category-inline">
+                            <input type="text" id="new-category-input" class="form-input-sm" placeholder="New category...">
+                            <button id="add-category-btn" class="btn-sm">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Subtasks</label>
+                    <div class="subtask-list" id="modal-subtasks"></div>
+                    <div class="add-subtask-row">
+                        <input type="text" id="subtask-input" class="form-input-sm" placeholder="Add a subtask...">
+                        <button id="add-subtask-btn" class="btn-sm">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="modal-delete-btn" style="display:none">Delete</button>
+                <button class="btn btn-primary" id="modal-save-btn">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Gallery Modal -->
+    <div class="modal-overlay" id="theme-modal">
+        <div class="modal glass-card modal-lg">
+            <div class="modal-header">
+                <h2 class="modal-title">🎨 Theme Gallery</h2>
+                <button class="modal-close" data-close="theme-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="theme-grid">
+                    <button class="theme-card" data-theme="starry-night">
+                        <div class="theme-preview starry-night-preview"></div>
+                        <span class="theme-name">Starry Night</span>
+                        <span class="theme-artist">Van Gogh</span>
+                    </button>
+                    <button class="theme-card" data-theme="ukiyo-e">
+                        <div class="theme-preview ukiyo-e-preview"></div>
+                        <span class="theme-name">Ukiyo-e</span>
+                        <span class="theme-artist">Hokusai</span>
+                    </button>
+                    <button class="theme-card" data-theme="art-deco">
+                        <div class="theme-preview art-deco-preview"></div>
+                        <span class="theme-name">Art Deco</span>
+                        <span class="theme-artist">1920s Gatsby</span>
+                    </button>
+                    <button class="theme-card" data-theme="bauhaus">
+                        <div class="theme-preview bauhaus-preview"></div>
+                        <span class="theme-name">Bauhaus</span>
+                        <span class="theme-artist">Kandinsky</span>
+                    </button>
+                    <button class="theme-card" data-theme="impressionist">
+                        <div class="theme-preview impressionist-preview"></div>
+                        <span class="theme-name">Impressionist</span>
+                        <span class="theme-artist">Monet</span>
+                    </button>
+                    <button class="theme-card" data-theme="cyberpunk">
+                        <div class="theme-preview cyberpunk-preview"></div>
+                        <span class="theme-name">Cyberpunk</span>
+                        <span class="theme-artist">Neon Noir</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pomodoro Modal -->
+    <div class="modal-overlay" id="pomodoro-modal">
+        <div class="modal glass-card">
+            <div class="modal-header">
+                <h2 class="modal-title">⏱ Pomodoro Timer</h2>
+                <button class="modal-close" data-close="pomodoro-modal">&times;</button>
+            </div>
+            <div class="modal-body pomodoro-body">
+                <div class="pomodoro-display">
+                    <svg class="pomodoro-ring" viewBox="0 0 200 200">
+                        <circle class="pomodoro-ring-bg" cx="100" cy="100" r="90" fill="none" stroke-width="6"/>
+                        <circle class="pomodoro-ring-fill" id="pomodoro-ring-fill" cx="100" cy="100" r="90" fill="none" stroke-width="6" stroke-dasharray="565.49" stroke-dashoffset="0"/>
+                    </svg>
+                    <div class="pomodoro-time" id="pomodoro-time">25:00</div>
+                    <div class="pomodoro-label" id="pomodoro-label">Focus Time</div>
+                </div>
+                <div class="pomodoro-controls">
+                    <button class="btn btn-primary" id="pomodoro-start">Start</button>
+                    <button class="btn btn-secondary" id="pomodoro-reset">Reset</button>
+                </div>
+                <div class="pomodoro-sessions">
+                    <span id="pomodoro-sessions-text">Sessions completed: 0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal-overlay" id="stats-modal">
+        <div class="modal glass-card modal-lg">
+            <div class="modal-header">
+                <h2 class="modal-title">📊 Statistics</h2>
+                <button class="modal-close" data-close="stats-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Total Tasks</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat-completed">0</div><div class="stat-label">Completed</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat-streak">0</div><div class="stat-label">Day Streak 🔥</div></div>
+                    <div class="stat-card"><div class="stat-value" id="stat-rate">0%</div><div class="stat-label">Completion Rate</div></div>
+                </div>
+                <div class="stats-chart-wrapper">
+                    <h3 class="chart-title">Weekly Overview</h3>
+                    <canvas id="stats-chart" width="600" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
